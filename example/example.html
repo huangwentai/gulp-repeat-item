@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+	ul{
+		overflow: hidden;
+	}
+	li{
+
+	}
+</style>
+<body>
+	
+	<ul>
+		<!--@@repeatItem(10) start-->
+		<li>
+			<h1>标题</h1>
+			<h2>${'0','1'}</h2>
+		</li>
+		<!--@@repeatItem end-->
+	</ul>
+	<script>
+		
+		var html=`<!--@@repeatItem(1) start-->
+		<li>
+			<h1>标题</h1>
+			<h2>${'0','1'}</h2>
+		</li>
+		<!--@@repeatItem end-->
+		<!--@@repeatItem(2) start-->
+		<li>
+			<h1>标题</h1>
+			<h2>${'0','1'}</h2>
+		</li>
+		<!--@@repeatItem end-->`
+		var regex = new RegExp('<!--(.*)[ ]*@@repeatItem\\(([\\s\\S]*?)\\)[ ]*start-->([\\s\\S]*?)<!--(.*)[ ]*@@repeatItem[ ]*end-->', 'ig')
+		
+		html=html.replace(regex, function (match, $1, $2, $3, $4) {
+			var html1='';
+			console.log($2);
+	      	for(var i=0;i<$2;i++){
+
+	      		html1+=$3
+			}
+			console.log(html1);
+	    	//console.log(match);
+	      	//console.log($1, $2, $3, $4);
+	      	return html1;
+	    });
+	    console.log(html);
+	    document.write(html);
+	    
+	</script>
+</body>
+</html>
