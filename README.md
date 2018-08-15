@@ -1,6 +1,6 @@
-# gulp-html-version
+# gulp-repeat-item
 
-gulp 插件，避免版本差异缓存，自动添加 css、js 版本号
+gulp 插件，循环输出item，适用于开发过程中一个商品组件要多次复制的情况，使代码更加美观更容易维护
 
 
 ## 安装
