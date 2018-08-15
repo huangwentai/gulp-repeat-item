@@ -5,7 +5,7 @@ gulp 插件，避免版本差异缓存，自动添加 css、js 版本号
 
 ## 安装
 
-    npm install gulp-html-version --save-dev
+    npm install gulp-repeat-item --save-dev
 
 
 ## 使用
@@ -14,43 +14,69 @@ gulpfile.js:
 
 ```js
 var gulp = require('gulp');
-gulpHtmlVersion = require('gulp-html-version');
+gulpRepeatItem = require('gulp-repeat-item');
 
-gulp.task('default', function() {
-    return gulp.src('./*.html')
-        .pipe(gulpHtmlVersion())
-        .pipe(gulp.dest('./build/'));
+gulp.task('default', function () {
+  return gulp.src('./*.html')
+    .pipe(gulpRepeatItem())
+    .pipe(gulp.dest('./build/'));
 });
+
 ```
 
 html:
 
 ```html
-<link rel="stylesheet" href="./example.css">
-<script src="./example.js"></script>
-<script src="./example1.js?code=utf-8"></script>
+<!--@@repeatItem(2) start-->
+<div class="cube @@data{['eat1','bea','wine','game']}">
+    <div class="word">
+        <div class="img-w">
+            <div class="img"><img src="@@data{['img/text-eat@3x.png','img/text-beautify@3x.png','img/text-drink@3x.png','img/text-game@3x.png']}" alt=""></div>
+            <div class="w">food le parc</div>
+        </div>
+        <div class="t"><p>@@dataRandom{['(Monday)','(Tuesday)','(Wednesday)','(Thursday)','(Friday)','(Saturday)','(Sunday)']}</p></div>
+        <div class="w2">Summer @@dataRandom{['Chill','Parent']} Out Busking</div>
+    </div>
+</div>
+<!--@@repeatItem end-->
 ```
 
 结果:
 
 ```html
-<link rel="stylesheet" href="./example.css?v=0.3.2">
-<script src="./example.js?v=0.3.2"></script>
-<script src="./example1.js?code=utf-8&v=0.3.2"></script>
+<div class="cube eat1">
+    <div class="word">
+        <div class="img-w">
+            <div class="img"><img src="img/text-eat@3x.png" alt=""></div>
+            <div class="w">food le parc</div>
+        </div>
+        <div class="t"><p>(Wednesday)</p></div>
+        <div class="w2">Summer Parent Out Busking</div>
+    </div>
+</div>
+
+<div class="cube bea">
+    <div class="word">
+        <div class="img-w">
+            <div class="img"><img src="img/text-beautify@3x.png" alt=""></div>
+            <div class="w">food le parc</div>
+        </div>
+        <div class="t"><p>(Thursday)</p></div>
+        <div class="w2">Summer Parent Out Busking</div>
+    </div>
+</div>
 ```
 
-## 参数
+## 参数(暂无)
 
 ```js
 .pipe(gulpHtmlVersion({
-    paramName: 'version',
-    paramType: 'timestamp',
-    suffix: ['css', 'js', 'jpg']
+    
 }))
 ```
 
 参数列表
 
- * `paramName` 版本号参数名称，默认为 `v`
- * `paramType` 生成版本的参数类型，默认为 `version` 有三个选项。 `version`: 在 `package.json` 中 `version` 作为版本号； `guid`: 生成唯一字符串版本号 ； `timestamp`: 生成时间戳版本号
- * `suffix` 需要在资源文件添加的版本号 默认为 `['css', 'js']`
+ * `@@repeatItem(2)` 数字2为要循环的个数
+ * `@@data{[]}` 按顺序显示数组内的元素
+ * `@@dataRandom{[]}` 随机显示数组内的元素
