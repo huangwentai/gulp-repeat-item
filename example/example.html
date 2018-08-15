@@ -3,6 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+	<link rel="stylesheet" href="new.css">
 </head>
 <style>
 	ul{
@@ -14,45 +16,32 @@
 </style>
 <body>
 	
-	<ul>
-		<!--@@repeatItem(10) start-->
-		<li>
-			<h1>标题</h1>
-			<h2>${'0','1'}</h2>
-		</li>
-		<!--@@repeatItem end-->
-	</ul>
-	<script>
-		
-		var html=`<!--@@repeatItem(1) start-->
-		<li>
-			<h1>标题</h1>
-			<h2>${'0','1'}</h2>
-		</li>
-		<!--@@repeatItem end-->
-		<!--@@repeatItem(2) start-->
-		<li>
-			<h1>标题</h1>
-			<h2>${'0','1'}</h2>
-		</li>
-		<!--@@repeatItem end-->`
-		var regex = new RegExp('<!--(.*)[ ]*@@repeatItem\\(([\\s\\S]*?)\\)[ ]*start-->([\\s\\S]*?)<!--(.*)[ ]*@@repeatItem[ ]*end-->', 'ig')
-		
-		html=html.replace(regex, function (match, $1, $2, $3, $4) {
-			var html1='';
-			console.log($2);
-	      	for(var i=0;i<$2;i++){
+	<!--@@repeatItem(10) start-->
+	<div class="cube @@data{['eat1','bea','wine','game']}">
+		<div class="word">
+			<div class="img-w">
+				<div class="img"><img src="@@data{['img/text-eat@3x.png','img/text-beautify@3x.png','img/text-drink@3x.png','img/text-game@3x.png']}" alt=""></div>
+				<div class="w">food le parc</div>
+			</div>
+			<div class="t"><p>@@dataRandom{['(Monday)','(Tuesday)','(Wednesday)','(Thursday)','(Friday)','(Saturday)','(Sunday)']}</p></div>
+			<div class="w2">Summer @@dataRandom{['Chill','Parent']} Out Busking</div>
+		</div>
+	</div>
+	<!--@@repeatItem end-->
 
-	      		html1+=$3
-			}
-			console.log(html1);
-	    	//console.log(match);
-	      	//console.log($1, $2, $3, $4);
-	      	return html1;
-	    });
-	    console.log(html);
-	    document.write(html);
-	    
-	</script>
+	<h5>---------------------全随机------------------------------</h5>
+	
+	<!--@@repeatItem(10) start-->
+	<div class="cube @@dataRandom{['eat1','bea','wine','game']}">
+		<div class="word">
+			<div class="img-w">
+				<div class="img"><img src="@@dataRandom{['img/text-eat@3x.png','img/text-beautify@3x.png','img/text-drink@3x.png','img/text-game@3x.png']}" alt=""></div>
+				<div class="w">food le parc</div>
+			</div>
+			<div class="t"><p>@@dataRandom{['(Monday)','(Tuesday)','(Wednesday)','(Thursday)','(Friday)','(Saturday)','(Sunday)']}</p></div>
+			<div class="w2">Summer @@dataRandom{['Chill','Parent']} Out Busking</div>
+		</div>
+	</div>
+	<!--@@repeatItem end-->
 </body>
 </html>

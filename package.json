@@ -1,6 +1,6 @@
 {
-  "name": "gulp-html-version",
-  "version": "1.0.2",
+  "name": "gulp-repeat-item",
+  "version": "1.0.0",
   "description": "Gulp plugin to append version from package.json",
   "main": "index.js",
   "scripts": {
@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MinJieLiu/gulp-html-version.git"
+    "url": "git+https://github.com/huangwentai/gulp-repeat-item.git"
   },
   "keywords": [
-    "gulp-html-version",
+    "gulp-repeat-item",
     "version",
     "gulp",
     "gulpplugin"
@@ -19,13 +19,13 @@
   "author": "LMY",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MinJieLiu/gulp-html-version/issues"
+    "url": "https://github.com/huangwentai/gulp-repeat-item/issues"
   },
-  "homepage": "https://github.com/MinJieLiu/gulp-html-version#readme",
+  "homepage": "https://github.com/huangwentai/gulp-repeat-item#readme",
   "dependencies": {
-    "gulp-util": "^3.0.7",
-    "object-assign": "^4.1.0",
-    "through2": "^2.0.1"
+    "gulp-util": "^3.0.8",
+    "object-assign": "^4.1.1",
+    "through2": "^2.0.3"
   },
   "devDependencies": {
     "gulp": "^3.9.1"

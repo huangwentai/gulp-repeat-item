@@ -5,53 +5,15 @@ var gutil = require('gulp-util');
 var pkg = require(process.cwd() + '/package.json');
 
 // plugin name
-const PLUGIN_NAME = 'gulp-html-version';
+const PLUGIN_NAME = 'gulp-repeat-item';
 
 // default parameter
 var defaults = {
-  paramName: 'v',
-  paramType: 'version',
-  suffix: ['css', 'js'],
+  
 };
 
-/**
- * Short unique id generator
- */
-var ShortId = function () {
-  var lastTime;
 
-  this.next = function () {
-    var d = new Date();
-    var thisTime = (d.getTime() - Date.UTC(d.getUTCFullYear(), 0, 1)) * 1000;
-    while (lastTime >= thisTime) {
-      thisTime++;
-    }
-    lastTime = thisTime;
-    return thisTime.toString(16);
-  };
-};
-
-function gulpHtmlVersion(options) {
-
-  // merge
-  var opts = assign(defaults, options);
-  var shortId = new ShortId();
-
-  // switch a parameter
-  switch (opts.paramType) {
-    case 'version':
-      opts.version = pkg.version;
-      break;
-    case 'guid':
-      opts.version = shortId.next();
-      break;
-    case 'timestamp':
-      opts.version = Date.now();
-      break;
-  }
-
-  var regex = new RegExp('(\\s[\\w-]+=".+)(\\.' + opts.suffix.join('|') + ')(\\?[^&"]+(?:&[^&"]+)*)?(")', 'ig');
-
+function gulpRepeatItem() {
   var stream = through.obj(function (file, enc, cb) {
 
     if (file.isNull()) {
@@ -66,16 +28,15 @@ function gulpHtmlVersion(options) {
 
     var contents = file.contents.toString();
     // replace
-    contents = contents.replace(regex, function (match, $1, $2, $3, $4) {
-      var version;
-      // append parameter
-      if ($3 != undefined) {
-        version = $3 + '&' + opts.paramName + '=' + opts.version;
-      } else {
-        version = '?' + opts.paramName + '=' + opts.version;
+    var regex = new RegExp('<!--(.*)[ ]*@@repeatItem\\(([\\s\\S]*?)\\)[ ]*start-->([\\s\\S]*?)<!--(.*)[ ]*@@repeatItem[ ]*end-->', 'ig')
+    
+    contents=contents.replace(regex, function (match, $1, $2, $3, $4) {
+      var html1='';
+          for(var i=0;i<$2;i++){
+            html1+=formatData($3,i)
       }
-      return $1 + $2 + version + $4;
-    });
+          return html1;
+      });
 
     file.contents = new Buffer(contents);
     this.push(file);
@@ -83,7 +44,21 @@ function gulpHtmlVersion(options) {
     cb();
   });
 
+  function formatData(data,index){
+    var regex3 = new RegExp('@@data([\\s\\S]*?)\\{\\[([\\s\\S]*?)\\]\\}', 'ig');
+    var data3=data.replace(regex3, function (match, $1, $2) {
+      var arr=eval(`[${$2}]`)
+      if($1=='Random'){
+        return arr[Math.floor(Math.random()*arr.length)];
+      }else{
+        return arr[index%arr.length];
+      } 
+    });
+
+    return data3;
+  }
+
   return stream;
 }
 
-module.exports = gulpHtmlVersion;
+module.exports = gulpRepeatItem;
