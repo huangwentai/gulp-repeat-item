@@ -70,7 +70,7 @@ html:
 ## 参数(暂无)
 
 ```js
-.pipe(gulpHtmlVersion({
+.pipe(gulpRepeatItem({
     
 }))
 ```
